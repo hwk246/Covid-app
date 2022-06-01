@@ -1,3 +1,20 @@
+const timecapsule = (datum) => {
+  
+  let month = datum.getMonth()
+  let day = datum.getDate()
+
+  if (month + 1 < 10){
+    month = '0'+ (datum.getMonth()+1)}
+ 
+  if (day < 10){
+    day = '0' + datum.getDate()};
+ 
+  const year = datum.getFullYear()
+  
+  return `${year}-${month}-${day}`
+}
+
+
 const divGlobalCases = document.querySelectorAll(".global-cases-data");
 
 apiRequestTotal = (total) => {
@@ -11,6 +28,7 @@ apiRequestTotal = (total) => {
 
 const globalbtn = document.querySelector(".global-btn");
 globalbtn.addEventListener("click", () => {
+  globalbtn.classList.add('hide')
    globalCases();
 });
 
@@ -27,11 +45,14 @@ const dutchCasesOutput = (provinceData) => {
   makeChart(provinceName, provinceInfections);
 };
 
-let today = new Date();
-const yyyy = today.getFullYear();
-let mm = today.getMonth() + 1;
-let dd = today.getDate();
-today = dd + "/" + mm + "/" + yyyy;
+// let today = new Date();
+// const yyyy = today.getFullYear();
+// let mm = today.getMonth() + 1;
+// let dd = today.getDate();
+// today = dd + "/" + mm + "/" + yyyy;
+
+const dmy = timecapsule(new Date()).split('-');
+const ddmmyyy = `${dmy[2]}-${dmy[1]}-${dmy[0]}`
 
 const ctx = document.getElementById("myChart").getContext("2d");
 
@@ -90,7 +111,7 @@ const makeChart = (province, infected) => {
       plugins: {
         title: {
           display: true,
-          text: `Covid cases Netherlands             ${today}`,
+          text: `Covid cases Netherlands             ${ddmmyyy}`,
           color: "white",
         },
 
@@ -105,23 +126,23 @@ const makeChart = (province, infected) => {
       },
 
       scales: {
-        x: {
-          // beginAtZero: true,
+        xAxes: {
+          beginAtZero: true,
           ticks: {
             font: {
-              size: 5,
+              size: 9,
             },
-            color: "blue",
+            color: "white",
           },
         },
 
         yAxes: {
-          // beginAtZero: true,
+          beginAtZero: true,
           ticks: {
             font: {
-              size: 5,
+              size: 6,
             },
-            color: "blue",
+            color: "black",
           },
         },
       },
@@ -130,20 +151,5 @@ const makeChart = (province, infected) => {
 };
 
 
-const timecapsule = (datum) => {
-  
-  let month = datum.getMonth()
-  let day = datum.getDate()
-
-  if (month + 1 < 10){
-    month = '0'+ (datum.getMonth()+1)}
- 
-  if (day < 10){
-    day = '0' + datum.getDate()};
- 
-  const year = datum.getFullYear()
-  
-  return `${year}-${month}-${day}`
-}
 
 
